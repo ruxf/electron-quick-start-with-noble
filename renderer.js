@@ -77,17 +77,15 @@ function onServicesAndCharacteristicsDiscovered(error, services,  characteristic
   const [, write, read, , insert, backup] = characteristics
   let total = 0
   read.on('data', (data) => {
-    console.log(typeof data)
-    console.log(data)
     total += 1
     if (total > 262) {
       return read.unsubscribe()
     }
     if (total === 262) {
-      // upload()
+      upload()
       return write.write(Buffer.from([0x02]))
     }
-    // onResolveData(data)
+    onResolveData(data)
   })
   read.subscribe((error) => {
     if (error) {
@@ -105,10 +103,7 @@ function onServicesAndCharacteristicsDiscovered(error, services,  characteristic
     validate(sequence, counter++)
     // console.log('Receive: ', Buffer.from(data).toString('hex'))
     console.log('Receive: ', buffer)
-    if (total % 9 === 0) {
-      return checkup.push(buffer.slice(0, 17).toString('hex'))
-    }
-    checkup.push(buffer.toString('hex'))
+    checkup.push(buffer.slice(1))
   }
   
   function validate(sequence, counter) {
@@ -128,11 +123,18 @@ function onServicesAndCharacteristicsDiscovered(error, services,  characteristic
     insert.on('data', (data) => {
       const buffer = Buffer.from(data)
       const [sequence] = buffer
-      checkup.splice(sequence, sequence + 1, buffer.toString('hex'))
+      checkup.splice(sequence, sequence + 1, buffer.slice(1))
     })
   }
   function upload() {
     console.log('Upload start:')
     console.log(checkup)
+    const data = checkup.reduce((map, item) => {
+      for (let value of item.values()) {
+        map.push(value.toString(16))
+      }
+      return map
+    }, [])
+    console.log(data.join(' '))
   }
 }
