@@ -2,6 +2,7 @@
 // It has the same sandbox as a Chrome extension.
 const noble = require('noble')
 const electron = require('electron')
+const buffer = require('buffer')
 
 window.addEventListener('DOMContentLoaded', () => {
   const replaceText = (selector, text) => {
@@ -16,3 +17,4 @@ window.addEventListener('DOMContentLoaded', () => {
 
 window.noble = noble
 window.electron = electron
+window.buffer = buffer
