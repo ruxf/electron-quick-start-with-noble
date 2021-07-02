@@ -1,17 +1,6 @@
 // Modules to control application life and create native browser window
 const {app, BrowserWindow, ipcMain} = require('electron')
 const path = require('path')
-const noble = require('noble')
-
-const REALTIME_SERVICE_UUID = '6e400001b5a3f393e0a9e50e24dcca9e'
-const REALTIME_CHARACTERISTIC_READ_UUID = '6e400003b5a3f393e0a9e50e24dcca9e'
-const REALTIME_CHARACTERISTIC_WRITE_UUID = '6e400002b5a3f393e0a9e50e24dcca9e'
-const CHECKUP_SERVICE_UUID = '6e400004b5a3f393e0a9e50e24dcca9e'
-const CHECKUP_CHARACTERISTIC_READ_UUID = '6e400006b5a3f393e0a9e50e24dcca9e'
-const CHECKUP_CHARACTERISTIC_WRITE_UUID = '6e400005b5a3f393e0a9e50e24dcca9e'
-const BACKUP_SERVICE_UUID = '6e40000ab5a3f393e0a9e50e24dcca9e'
-const BACKUP_CHARACTERISTIC_READ_UUID = '6e40000cb5a3f393e0a9e50e24dcca9e'
-const BACKUP_CHARACTERISTIC_WRITE_UUID = '6e40000bb5a3f393e0a9e50e24dcca9e'
 
 function createWindow () {
   // Create the browser window.
